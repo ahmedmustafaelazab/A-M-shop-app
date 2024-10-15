@@ -26,17 +26,17 @@ class ProductDetails extends StatelessWidget {
             ),
             title: const Text("Product Details"),elevation: 0,foregroundColor:Colors.black,backgroundColor: thirdColor,),
           body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 12),
+            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children:
               [
                 Image.network(model.image.toString(),height: 200,width: double.infinity,),
-                SizedBox(height: 20,),
-                Text(model.name.toString(),style: TextStyle(color: mainColor,fontSize: 17,overflow: TextOverflow.ellipsis),),
-                SizedBox(height: 10,),
-                Text("${model.price} \$",style: TextStyle(color: secondColor),),
-                SizedBox(height: 10,),
+                const SizedBox(height: 20,),
+                Text(model.name.toString(),style: const TextStyle(color: mainColor,fontSize: 17,overflow: TextOverflow.ellipsis),),
+                const SizedBox(height: 10,),
+                Text("${model.price} \$",style: const TextStyle(color: secondColor),),
+                const SizedBox(height: 10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children:
@@ -48,11 +48,11 @@ class ProductDetails extends StatelessWidget {
                       },
                       textColor: Colors.white,
                       color: mainColor,
-                      child: Text("-",style: TextStyle(fontSize: 35,fontWeight: FontWeight.bold),),
+                      child: const Text("-",style: TextStyle(fontSize: 35,fontWeight: FontWeight.bold),),
                     ),
-                    SizedBox(width: 15,),
-                    Text(cubit.productNum.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
-                    SizedBox(width: 15,),
+                    const SizedBox(width: 15,),
+                    Text(cubit.productNum.toString(),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
+                    const SizedBox(width: 15,),
                     MaterialButton(
                       onPressed: ()
                       {
@@ -60,17 +60,17 @@ class ProductDetails extends StatelessWidget {
                       },
                       textColor: Colors.white,
                       color: mainColor,
-                      child: Text("+",style: TextStyle(fontSize: 35,fontWeight: FontWeight.bold),),
+                      child: const Text("+",style: TextStyle(fontSize: 35,fontWeight: FontWeight.bold),),
                     ),
                   ],
                 ),
-                SizedBox(height: 10,),
-                Text("Description",style: TextStyle(color: mainColor,fontSize: 17,overflow: TextOverflow.ellipsis),),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
+                const Text("Description",style: TextStyle(color: mainColor,fontSize: 17,overflow: TextOverflow.ellipsis),),
+                const SizedBox(height: 10,),
                 Expanded(
-                  child: Text("${model.description} \$",style: TextStyle(color: Colors.grey),),
+                  child: Text("${model.description} \$",style: const TextStyle(color: Colors.grey),),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children:
@@ -87,7 +87,7 @@ class ProductDetails extends StatelessWidget {
                             "Remove from Cart" : "Add to Cart"
                       ),
                     ),
-                    SizedBox(width: 15,),
+                    const SizedBox(width: 15,),
                     OutlinedButton(
                         onPressed: ()
                         {

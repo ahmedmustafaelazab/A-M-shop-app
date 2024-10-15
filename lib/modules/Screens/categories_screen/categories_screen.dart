@@ -13,11 +13,9 @@ class CategoriesScreen extends StatelessWidget {
     final cubit = BlocProvider.of<LayoutCubit>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Categories"),
+        title: const Text("Categories", style: TextStyle(color: thirdColor)), 
         elevation: 0,
-        backgroundColor: thirdColor,
-        foregroundColor: mainColor,
-      ),
+        backgroundColor: mainColor,  ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12.5),
         child: cubit.categoriesData.isEmpty
@@ -40,7 +38,7 @@ class CategoriesScreen extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
-        side: BorderSide(color: mainColor, width: 2),
+        side: const BorderSide(color: mainColor, width: 2),
       ),
       child: Container(
         padding: const EdgeInsets.all(15),

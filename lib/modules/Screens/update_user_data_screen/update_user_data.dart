@@ -19,13 +19,13 @@ class UpdateUserDataScreen extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
             title: const Text("Update Data"),
-            leading: SizedBox(),
+            leading: const SizedBox(),
             foregroundColor: Colors.black,
             centerTitle: true,
             backgroundColor: thirdColor,
             elevation: 0),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
           child: Form(
             key: formKey,
             child: Column(
@@ -39,22 +39,22 @@ class UpdateUserDataScreen extends StatelessWidget {
                       return "Name must not be empty";
                     }
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: "User Name",
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 TextFormField(
                   controller: phoneController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: "Phone",
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 MaterialButton(
@@ -68,7 +68,7 @@ class UpdateUserDataScreen extends StatelessWidget {
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Container(
-                          child: Text("There is no change on Data!"),
+                          child: const Text("There is no change on Data!"),
                         )));
                       }
                     }

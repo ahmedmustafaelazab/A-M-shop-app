@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                   },
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: mainColor,width: 2.0),
+                      borderSide: const BorderSide(color: mainColor,width: 2.0),
                       borderRadius: BorderRadius.circular(20),
                     ),
                       focusedBorder: OutlineInputBorder(
@@ -72,14 +72,14 @@ class HomeScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       hintText: "Search",
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.search),
+                      border: const OutlineInputBorder(),
                       suffixIcon: GestureDetector(
                         onTap: () {},
-                        child: Icon(Icons.clear),
+                        child: const Icon(Icons.clear),
                       )),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 18,
                 ),
                 cubit.bannersData.isEmpty
@@ -244,7 +244,7 @@ Widget _productItem(
                   children: [
                     Text(
                       "${productModel.price} \$",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.grey,
                         decoration: TextDecoration.lineThrough,

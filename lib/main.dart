@@ -43,10 +43,10 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
               theme: ThemeData(
                 fontFamily: "CourierPrime",
-                scaffoldBackgroundColor: Color(0xffF9F9F9),
+                scaffoldBackgroundColor: const Color(0xffF9F9F9),
               ),
               debugShowCheckedModeBanner: false,
-              home: token != null ? const LayoutScreen() : SplashScreen()),
+              home: token != null ? const LayoutScreen() : const SplashScreen()),
         );
       },
     );

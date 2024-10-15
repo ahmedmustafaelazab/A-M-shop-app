@@ -11,7 +11,7 @@ import '../../Widgets/alert_dialog.dart';
 import 'auth_cubit/auth_states.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
               } else if (state is LoginSuccessState) {
                 Navigator.pop(context); // عشان يخرج من alertDialog
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => LayoutScreen()));
+                    MaterialPageRoute(builder: (context) => const LayoutScreen()));
               }
             },
             builder: (context, state) {
@@ -86,8 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     flex: 2,
                     child: Container(
                       width: double.infinity,
-                      padding: EdgeInsets.symmetric(horizontal: 50),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      decoration: const BoxDecoration(
                           color: thirdColor,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(200),
@@ -97,12 +97,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               "Login",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 15,
                             ),
                             TextFormField(
@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }
                               },
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 15,
                             ),
                             TextFormField(

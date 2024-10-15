@@ -11,7 +11,7 @@ import '../../../shared/style/colors.dart';
 import '../update_user_data_screen/update_user_data.dart';
 
 class ProfileScreen extends StatelessWidget{
-  ProfileScreen({super.key});
+  const ProfileScreen({super.key});
   @override
   Widget build(context){
     LayoutCubit cubit = BlocProvider.of<LayoutCubit>(context);
@@ -63,11 +63,11 @@ class ProfileScreen extends StatelessWidget{
                                 }),
                                 const SizedBox(height: 15,),
                                 _buttonItem(iconData: Icons.shopping_cart,title: "Orders",onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => CartScreen()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreen()));
                                 }),
                                 const SizedBox(height: 15,),
                                 _buttonItem(iconData: Icons.favorite,title: "Favorite",onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritesScreen()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoritesScreen()));
                                 }),
                                 const SizedBox(height: 15,),
                                 _buttonItem(
@@ -75,7 +75,7 @@ class ProfileScreen extends StatelessWidget{
                                     title: "Log out",
                                     onTap: ()
                                     {
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
                                     }
                                 ),
                               ],
@@ -107,7 +107,7 @@ class ProfileScreen extends StatelessWidget{
           [
             Icon(iconData,color: thirdColor, size: 22,),
             const SizedBox(width: 15,),
-            Text(title,style: TextStyle(fontWeight: FontWeight.w600,fontSize: 17,color: thirdColor),)
+            Text(title,style: const TextStyle(fontWeight: FontWeight.w600,fontSize: 17,color: thirdColor),)
           ],
         )
     );

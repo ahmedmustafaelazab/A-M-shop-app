@@ -26,7 +26,7 @@ class LayoutCubit extends Cubit<LayoutStates>{
     emit(ChangeBottomNavigationIndexState());
   }
 
-  List<Widget> layoutScreens = [HomeScreen(),CategoriesScreen(),FavoritesScreen(),CartScreen(),ProfileScreen()];
+  List<Widget> layoutScreens = [const HomeScreen(),const CategoriesScreen(),const FavoritesScreen(),const CartScreen(),ProfileScreen()];
 
   UserModel? userModel;
   void getUserData() async {
