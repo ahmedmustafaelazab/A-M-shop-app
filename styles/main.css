@@ -1,0 +1,6 @@
+.product-button,
+.cart-button,
+.favorite-button {
+  background-color: black;
+  color: white;
+}

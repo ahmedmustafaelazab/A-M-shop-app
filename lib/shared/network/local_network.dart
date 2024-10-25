@@ -7,7 +7,7 @@ class CacheNetwork{
     sharedPref = await SharedPreferences.getInstance();
   }
 
-  // set - get - delete - clear ( key , value )
+  
  static Future<bool> insertToCache({required String key,required String value}) async {
     return await sharedPref.setString(key, value);
  }

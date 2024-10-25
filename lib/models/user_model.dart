@@ -8,7 +8,7 @@ class UserModel{
 
   UserModel({required this.name,required this.token,required this.id,required this.email,required this.image,required this.phone});
 
-  // Named constructor
+  
   UserModel.fromJson(Map<String,dynamic> data){
     name = data['name'];
     image = data['image'];
@@ -16,6 +16,6 @@ class UserModel{
     email = data['email'];
     phone = data['phone'];
     id = data['id'];
-  }
+  }  // end of fromJson 
 
 }

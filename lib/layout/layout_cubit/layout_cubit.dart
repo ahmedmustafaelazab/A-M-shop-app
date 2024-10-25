@@ -3,52 +3,53 @@ import 'package:bloc/bloc.dart';
 import 'package:shop_app/models/category_model.dart';
 import 'package:shop_app/models/user_model.dart';
 import 'package:shop_app/modules/Screens/categories_screen/categories_screen.dart';
-import 'package:shop_app/modules/Screens/favorites_screen/favorites.dart';
+import 'package:shop_app/modules/Screens/favorites/favorites_screen.dart';
 import 'package:shop_app/modules/Screens/home_screen/home_screen.dart';
 import 'package:shop_app/modules/Screens/cart_screen/cart_screen.dart';
 import 'package:shop_app/modules/Screens/profile_screen/profile_screen.dart';
 import 'package:shop_app/shared/constnts/constants.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http ;
+import 'package:http/http.dart' as http;
 import 'package:shop_app/layout/layout_cubit/layout_states.dart';
 import 'package:http/http.dart';
+
 
 import '../../models/banner_model.dart';
 import '../../models/product_model.dart';
 import '../../shared/network/local_network.dart';
 
-class LayoutCubit extends Cubit<LayoutStates>{
+class LayoutCubit extends Cubit<LayoutStates> {
   LayoutCubit() : super(LayoutInitialState());
 
-  int bottomNavIndex = 0 ;
-  void changeBottomNavIndex({required int currentIndex}){
-    bottomNavIndex = currentIndex ;
+  int bottomNavIndex = 0;
+  void changeBottomNavIndex({required int currentIndex}) {
+    bottomNavIndex = currentIndex;
     emit(ChangeBottomNavigationIndexState());
   }
 
-  List<Widget> layoutScreens = [const HomeScreen(),const CategoriesScreen(),const FavoritesScreen(),const CartScreen(),ProfileScreen()];
+  List<Widget> layoutScreens = [
+    const HomeScreen(),
+    const CategoriesScreen(),
+    const FavoritesScreen(),
+    const CartScreen(),
+    const ProfileScreen()
+  ];
 
   UserModel? userModel;
   void getUserData() async {
     emit(GetUserDataLoadingState());
-    Response response = await http.get(
-      Uri.parse("https://student.valuxapps.com/api/profile"),
-      headers:
-      {
-        'Authorization' : token!,
-      }
-    );
+    Response response = await http
+        .get(Uri.parse("https://student.valuxapps.com/api/profile"), headers: {
+      'Authorization': token!,
+    });
     var responseData = jsonDecode(response.body);
-    if( responseData['status'] == true )
-      {
-        userModel = UserModel.fromJson(responseData['data']);
-        debugPrint("User Data is : ${responseData['data']}");
-        emit(GetUserDataSuccessState());
-      }
-    else
-      {
-        emit(FailedToGetUserDataState(responseData['message']));
-      }
+    if (responseData['status'] == true) {
+      userModel = UserModel.fromJson(responseData['data']);
+      debugPrint("User Data is : ${responseData['data']}");
+      emit(GetUserDataSuccessState());
+    } else {
+      emit(FailedToGetUserDataState(responseData['message']));
+    }
   }
 
   List<BannerModel> bannersData = [];
@@ -58,21 +59,16 @@ class LayoutCubit extends Cubit<LayoutStates>{
       Uri.parse("https://student.valuxapps.com/api/banners"),
     );
     var responseBody = jsonDecode(response.body);
-    if( responseBody['status'] == true )
-      {
-        for( var item in responseBody['data'] )
-          {
-            bannersData.add(BannerModel.fromJson(data: item));
-          }
-        // print("First Url on Banners Data is : ${bannersData.first.image}");
-        emit(GetBannersSuccessState());
+    if (responseBody['status'] == true) {
+      for (var item in responseBody['data']) {
+        bannersData.add(BannerModel.fromJson(data: item));
       }
-    else
-      {
-        bannersData = [];
-        print("Banners Data is : $responseBody");
-        emit(FailedToGetBannersState());
-      }
+      emit(GetBannersSuccessState());
+    } else {
+      bannersData = [];
+      print("Banners Data is : $responseBody");
+      emit(FailedToGetBannersState());
+    }
   }
 
   List<CategoryModel> categoriesData = [];
@@ -80,24 +76,16 @@ class LayoutCubit extends Cubit<LayoutStates>{
   void getCategories() async {
     emit(GetCategoriesLoadingState());
     Response response = await http.get(
-      Uri.parse("https://student.valuxapps.com/api/categories"),
-      headers:
-      {
-        'lang' : 'en'
-      }
-    );
+        Uri.parse("https://student.valuxapps.com/api/categories"),
+        headers: {'lang': 'en'});
     var responseBody = jsonDecode(response.body);
-    if( responseBody['status'] == true )
-    {
-      for( var item in responseBody['data']['data'] )
-      {
+    if (responseBody['status'] == true) {
+      for (var item in responseBody['data']['data']) {
         categoriesData.add(CategoryModel.fromJson(data: item));
       }
-      // print("First Url on Categories Data is : ${categoriesData.first.image}");
+      
       emit(GetCategoriesSuccessState());
-    }
-    else
-    {
+    } else {
       categoriesData = [];
       print("Banners Data is : $responseBody");
       emit(FailedToGetCategoriesState());
@@ -105,40 +93,33 @@ class LayoutCubit extends Cubit<LayoutStates>{
   }
 
   List<ProductModel> productsData = [];
-  // Get Banners Data
+  
   Set<String> favoritesStatus = {};
   void getProducts() async {
     emit(GetProductsLoadingState());
     Response response = await http.get(
         Uri.parse("https://student.valuxapps.com/api/home"),
-      headers:
-      {
-        'lang' : "en"
-      }
-    );
+        headers: {'lang': "en"});
     var responseBody = jsonDecode(response.body);
-    if( responseBody['status'] == true )
-    {
-      for( var item in responseBody['data']['products'] )
-      {
+    if (responseBody['status'] == true) {
+      for (var item in responseBody['data']['products']) {
         productsData.add(ProductModel.fromJson(json: item));
       }
       emit(GetProductsSuccessState());
-    }
-    else
-    {
+    } else {
       productsData = [];
-      // print("Products Data is : $responseBody");
+      
       emit(FailedToGetProductsState());
     }
   }
 
   List<ProductModel> productsFiltered = [];
-  void filterProducts({required String input})
-  {
-    productsFiltered = productsData.where((element)
-    {
-      return element.name.toString().toLowerCase().startsWith(input.toLowerCase());
+  void filterProducts({required String input}) {
+    productsFiltered = productsData.where((element) {
+      return element.name
+          .toString()
+          .toLowerCase()
+          .startsWith(input.toLowerCase());
     }).toList();
     emit(FilterProductsSuccessState());
   }
@@ -149,129 +130,121 @@ class LayoutCubit extends Cubit<LayoutStates>{
     emit(GetFavoritesLoadingState());
     Response response = await http.get(
         Uri.parse("https://student.valuxapps.com/api/favorites"),
-        headers:
-        {
-          'lang' : 'en',
-          'Authorization' : token!
-        }
-    );
+        headers: {'lang': 'en', 'Authorization': token!});
     var responseBody = jsonDecode(response.body);
-    if( responseBody['status'] == true )
-    {
-      for( var item in responseBody['data']['data'] )
-      {
+    if (responseBody['status'] == true) {
+      for (var item in responseBody['data']['data']) {
         favoritesStatus.add(item['product']['id'].toString());
         favoritesData.add(ProductModel.fromJson(json: item['product']));
       }
       debugPrint("Favorites number is : ${responseBody['data']['total']}");
       debugPrint("Favorites Status Number is : ${favoritesStatus.length}");
       emit(GetFavoritesSuccessState());
-    }
-    else
-    {
+    } else {
       favoritesData = [];
       debugPrint("Favorites Data is : $responseBody");
       emit(FailedToGetFavoritesState());
     }
   }
 
-  // Related to cart
+  
   List<ProductModel> cartData = [];
   Future<void> getCart() async {
     cartData.clear();
     emit(GetCartLoadingState());
     Response response = await http.get(
         Uri.parse("https://student.valuxapps.com/api/carts"),
-        headers:
-        {
-          'lang' : 'en',
-          'Authorization' : token!
-        }
-    );
+        headers: {'lang': 'en', 'Authorization': token!});
     var responseBody = jsonDecode(response.body);
-    if( responseBody['status'] == true )
-    {
-      for( var item in responseBody['data']['cart_items'] )
-      {
+    if (responseBody['status'] == true) {
+      for (var item in responseBody['data']['cart_items']) {
         cartsID.add(item['product']['id'].toString());
         cartData.add(ProductModel.fromJson(json: item['product']));
       }
       debugPrint("Cart number is : ${cartData.length}");
       emit(GetCartSuccessState());
-    }
-    else
-    {
+    } else {
       emit(FailedToGetCartState());
     }
   }
 
   Set<String> cartsID = {};
-  void addOrRemoveFromCart({required String productID}) async {
-    Response response = await http.post(
-        Uri.parse("https://student.valuxapps.com/api/carts"),
-      headers:
-      {
-        'Authorization' : token!,
-        'lang' : "en"
-      },
-      body:
-      {
-        'product_id' : productID
-      }
-    );
-    var responseBody = jsonDecode(response.body);
-    if( responseBody['status'] == true )
-      {
-        cartsID.contains(productID) ? cartsID.remove(productID) : cartsID.add(productID);
-        emit(AddOrRemoveFromCartSuccessState());
-      }
-    else
-      {
-        emit(FailedToAddOrRemoveFromCartState());
-      }
+ void addOrRemoveFromCart({required String productID}) async {
+  emit(GetCartLoadingState());
+
+  
+  bool isInCart = cartsID.contains(productID);
+  
+  
+  Response response = await http.post(
+    Uri.parse("https://student.valuxapps.com/api/carts"),
+    headers: {'Authorization': token!, 'lang': "en"},
+    body: {'product_id': productID}
+  );
+
+  var responseBody = jsonDecode(response.body);
+  
+  if (responseBody['status'] == true) {
+    if (isInCart) {
+      cartsID.remove(productID); 
+      cartData.removeWhere((product) => product.id == productID); 
+    } else {
+      cartsID.add(productID); 
+      
+      ProductModel productToAdd = await fetchProductById(productID);
+      cartData.add(productToAdd);
+    }
+    emit(AddOrRemoveFromCartSuccessState());
+  } else {
+    emit(FailedToAddOrRemoveFromCartState());
   }
+}
+
+
+Future<ProductModel> fetchProductById(String productID) async {
+  Response response = await http.get(
+    Uri.parse("https://student.valuxapps.com/api/products/$productID"),
+    headers: {'Authorization': token!, 'lang': "en"},
+  );
+
+  var responseBody = jsonDecode(response.body);
+  if (responseBody['status'] == true) {
+    return ProductModel.fromJson(json: responseBody['data']);
+  } else {
+    throw Exception("Failed to fetch product details");
+  }
+}
 
   void addOrRemoveToOrFromFavorites({required String productID}) async {
-    // عشان يحصل ريفرش في صفحه HomeScreen
-    favoritesStatus.contains(productID) == true ? favoritesStatus.remove(productID) : favoritesStatus.add(productID);
+    
+    favoritesStatus.contains(productID) == true
+        ? favoritesStatus.remove(productID)
+        : favoritesStatus.add(productID);
     emit(GetFavoritesLoadingState());
     Response response = await http.post(
         Uri.parse("https://student.valuxapps.com/api/favorites"),
-        headers:
-        {
-          'lang' : 'en',
-          'Authorization' : token!
-        },
-      body:
-      {
-        "product_id": productID
-      }
-    );
+        headers: {'lang': 'en', 'Authorization': token!},
+        body: {"product_id": productID});
     var responseBody = jsonDecode(response.body);
-    if( responseBody['status'] == true )
-    {
+    if (responseBody['status'] == true) {
       await getFavorites();
       emit(AddOrRemoveFromFavoritesSuccessState());
-    }
-    else
-    {
+    } else {
       emit(FailedToAddOrRemoveFromFavoritesState());
     }
   }
 
-
-  // Related to Product Quantity ( On Cart )
-  int productNum = 1 ;
-  void increment(){
+  
+  int productNum = 1;
+  void increment() {
     productNum++;
     emit(UpdateProductNumSuccessState());
   }
 
-  void decrement(){
-    if( productNum > 1 )
-      {
-        productNum--;
-      }
+  void decrement() {
+    if (productNum > 1) {
+      productNum--;
+    }
     emit(UpdateProductNumSuccessState());
   }
 
@@ -280,55 +253,58 @@ class LayoutCubit extends Cubit<LayoutStates>{
     String? currentPassword = await CacheNetwork.getCacheData(key: 'password');
     Response response = await http.post(
         Uri.parse("https://student.valuxapps.com/api/change-password"),
-      body: {
-          'current_password' : currentPassword,
-          'new_password' : newPassword
-      },
-      headers: {
-          'Authorization' : token!
-      }
-    );
+        body: {
+          'current_password': currentPassword,
+          'new_password': newPassword
+        },
+        headers: {
+          'Authorization': token!
+        });
     var responseBody = jsonDecode(response.body);
-    if( responseBody['status'] )
-      {
-        CacheNetwork.insertToCache(key: "password", value: newPassword);
-        password = newPassword;
-        emit(ChangePasswordSuccessState());
-      }
-    else
-      {
-        emit(FailedToChangePasswordState());
-      }
+    if (responseBody['status']) {
+      CacheNetwork.insertToCache(key: "password", value: newPassword);
+      password = newPassword;
+      emit(ChangePasswordSuccessState());
+    } else {
+      emit(FailedToChangePasswordState());
+    }
   }
 
-  void updateUserData({required String phone,required String name}) async {
+  void updateUserData({required String phone, required String name}) async {
     emit(UpdateUserDataLoadingState());
     String? currentPassword = await CacheNetwork.getCacheData(key: 'password');
     Response response = await http.put(
         Uri.parse("https://student.valuxapps.com/api/update-profile"),
-      body:
-      {
-          'name' : name,
-          'email' : userModel!.email,
-          'password' : currentPassword,
-          'phone' : phone,
-          'image' : userModel!.image,
-      },
-      headers:
-      {
-          'Authorization' : token!
-      }
-    );
+        body: {
+          'name': name,
+          'email': userModel!.email,
+          'password': currentPassword,
+          'phone': phone,
+          'image': userModel!.image,
+        },
+        headers: {
+          'Authorization': token!
+        });
     var responseBody = jsonDecode(response.body);
-    if( responseBody['status'] )
-      {
-        userModel = UserModel.fromJson(responseBody['data']);
-        emit(UpdateUserDataSuccessState());
-      }
-    else
-      {
-        emit(FailedToUpdateUserDataState());
-      }
+    if (responseBody['status']) {
+      userModel = UserModel.fromJson(responseBody['data']);
+      emit(UpdateUserDataSuccessState());
+    } else {
+      emit(FailedToUpdateUserDataState());
+    }
   }
 
+  
+  bool isDarkMode = false;
+
+  void toggleTheme() {
+    isDarkMode = !isDarkMode;
+    
+    emit(ChangeThemeState());
+  }
+
+  void setTheme(bool darkMode) {
+    isDarkMode = darkMode;
+    emit(ChangeThemeState());
+  }
 }

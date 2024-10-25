@@ -46,7 +46,7 @@ class FailedToGetCategoriesState extends LayoutStates{}
 class GetProductsSuccessState extends LayoutStates{}
 class GetProductsLoadingState extends LayoutStates{}
 class FailedToGetProductsState extends LayoutStates{}
-// auth_states.dart
+
 abstract class AuthState {}
 
 class AuthInitial extends AuthState {}
@@ -54,3 +54,10 @@ class AuthInitial extends AuthState {}
 class AuthLoggedIn extends AuthState {}
 
 class AuthLoginFailed extends AuthState {}
+
+class ThemeChangedState extends LayoutStates {
+  final bool isDarkMode;
+  ThemeChangedState(this.isDarkMode);
+}
+
+class ChangeThemeState extends LayoutStates {}

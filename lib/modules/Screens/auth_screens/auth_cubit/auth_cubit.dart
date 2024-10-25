@@ -9,8 +9,7 @@ import 'auth_states.dart';
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitialState());
 
-  // Todo: API URL => https://student.valuxapps.com/api/
-  // Todo: Register endpoint => register
+  
   void register(
       {required String email,
       required String name,
@@ -19,14 +18,14 @@ class AuthCubit extends Cubit<AuthStates> {
     emit(RegisterLoadingState());
     try {
       Response response = await http.post(
-        // request Url = base url + method url ( endpoint ) = https://student.valuxapps.com + /api/register
+        
         Uri.parse('https://student.valuxapps.com/api/register'),
         body: {
           'name': name,
           'email': email,
           'password': password,
           'phone': phone,
-          'image': "jdfjfj" // الصوره مش شغاله بس لازم ابعت قيمه ك value
+          'image': "jdfjfj" 
         },
       );
       if (response.statusCode == 200) {
@@ -46,19 +45,19 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 
-  // Account : mo.ha@gmail.com , password : 123456
+  
   void login({required String email, required String password}) async {
     emit(LoginLoadingState());
     try {
       Response response = await http.post(
-        // request => url = base url + method url
+        
         Uri.parse('https://student.valuxapps.com/api/login'),
         body: {'email': email, 'password': password},
       );
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body);
         if (responseData['status'] == true) {
-          // debugPrint("User login success and his Data is : ${responseData['data']['token']}");
+        
           await CacheNetwork.insertToCache(
               key: "token", value: responseData['data']['token']);
           await CacheNetwork.insertToCache(key: "password", value: password);
@@ -73,19 +72,3 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 }
-
-/*
-Response after login
-{
-    "status": true,
-    "message": "Registration done successfully",
-    "data": {
-        "name": "Saleh Ahmed",
-        "phone": "0125454412",
-        "email": "mohamed.hashim73@gmail.com",
-        "id": 52821,
-        "image": "https://student.valuxapps.com/storage/uploads/users/CpFliPNQdd_1677580291.jpeg",
-        "token": "EbiEk1Tt5UHmHaYbwLvcTdDRPQPYPCQccIBVhH1bwGDnfrAT78ddMB96IKMN3Nv8jpLQAk"
-    }
-}
- */

@@ -15,15 +15,20 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-      onPressed: press,
-      color: mainColor, // Set the button color
-      textColor: Colors.white, // Set the text color
-      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 150.0), // Set padding
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0), // Set border radius
+    return SizedBox(
+      width: double.infinity, 
+      child: ElevatedButton(
+        onPressed: press,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: mainColor,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+        ),
+        child: Text(text),
       ),
-      child: Text(text),
     );
   }
 }
@@ -37,39 +42,44 @@ class LoginOrSignupScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-          child: Column(
-            children: [
-              const Spacer(flex: 2),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50.0),
-                child: Image.network(
-                  "https://i.postimg.cc/pTwFBS3N/shop-app-with-earthy-green-color-0x-FF819f7f-1-removebg-preview.png",
-                ),
-              ),
-              const Spacer(),
-              PrimaryButton(
-                text: "login",
-                press: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginScreen(),
-                  ),
-                ),
-              ),
-              const SizedBox(height: kDefaultPadding * 1.5),
-              PrimaryButton(
-                text: "Sign Up",
-                press: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => RegisterScreen(),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return Column(
+                children: [
+                  const Spacer(flex: 2),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(50.0),
+                    child: Image.asset(
+                      "images/boarder1.png",
+                      width: constraints.maxWidth * 0.8, 
                     ),
-                  );
-                },
-              ),
-              const Spacer(flex: 2),
-            ],
+                  ),
+                  const Spacer(),
+                  PrimaryButton(
+                    text: "Login",
+                    press: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: constraints.maxHeight * 0.03), 
+                  PrimaryButton(
+                    text: "Sign Up",
+                    press: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RegisterScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  const Spacer(flex: 2),
+                ],
+              );
+            },
           ),
         ),
       ),
