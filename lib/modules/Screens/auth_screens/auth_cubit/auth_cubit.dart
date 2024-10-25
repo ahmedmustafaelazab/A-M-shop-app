@@ -63,7 +63,7 @@ class AuthCubit extends Cubit<AuthStates> {
           await CacheNetwork.insertToCache(key: "password", value: password);
           emit(LoginSuccessState());
         } else {
-          debugPrint("Failed to login, reason is : ${responseData['message']}");
+          debugPrint("Failed to login , reason is : ${responseData['message']}");
           emit(FailedToLoginState(message: responseData['message']));
         }
       }
