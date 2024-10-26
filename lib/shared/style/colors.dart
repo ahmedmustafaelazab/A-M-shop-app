@@ -27,7 +27,7 @@ const lightSurfaceColor = Color(0xFFFFFFFF);
 const lightTextColor = Color(0xFF1F2421);
 
 // Semantic colors
-const infoColor  = Color(0xFF819f7f);
+const infoColor  =  Color(0xFF819f7f);
 
 const kDefaultPadding = 20.0;
 
